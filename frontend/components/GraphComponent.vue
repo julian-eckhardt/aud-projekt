@@ -152,13 +152,14 @@ export default {
         .append('g')
         .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
 
+      const lines = svg.selectAll('lines').data(jsonData).enter().append('g')
+
       const line = d3
         .line()
         .x((d) => x(d.index))
         .y((d) => y(d.Gesamt))
 
       svg
-        .select('#d3-graph')
         .attr('x', function (d) {
           return x(new Date(d.index))
         })
@@ -186,18 +187,9 @@ export default {
 
       svg.append('g').attr('class', 'y axis').call(yAxis)
 
-      svg
-        .selectAll('#d3-graph')
-        .data(jsonData)
-        .enter()
-        .append('path')
-        .attr('d', function (d) {
-          return line(d.Gesamt)
-        })
-        .attr('stroke', 'steelblue')
-        .attr('stroke-width', 1.5)
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
+      lines.append('path').attr('d', function (d) {
+        return line(d.Gesamt)
+      })
     },
   },
 }

@@ -1,6 +1,54 @@
 <template>
   <div class="container">
-    <GraphComponent />
+    <b-row>
+      <b-col class="graphCol">
+        <GraphComponent />
+      </b-col>
+      <b-col class="formCol">
+        <b-form class="forms">
+          <b-form-group
+            id="rReductionValue"
+            label="R-Zahl-Reduktion:"
+            label-for="rReductionInput"
+          >
+            <b-form-input
+              id="rInput"
+              v-model="rReductionValue"
+              class="rReductionInput"
+              placeholder="Z.B. 1.2"
+              required
+              type="text"
+            />
+          </b-form-group>
+
+          <b-form-group
+            id="timeFrameStart"
+            label="Startzeitpunkt:"
+            label-for="timeFrameStartInput"
+          >
+            <b-form-input
+              id="timeFrameStartInput"
+              v-model="timeFrameStart"
+              placeholder="Datum eingeben"
+              type="date"
+            />
+          </b-form-group>
+          <b-form-group
+            id="timeFrameEnd"
+            label="Endzeitpunkt:"
+            label-for="timeFrameEndInput"
+          >
+            <b-form-input
+              id="timeFrameEndInput"
+              v-model="timeFrameEnd"
+              placeholder="Datum eingeben"
+              type="date"
+            />
+          </b-form-group>
+          <b-button variant="primary"> Senden </b-button>
+        </b-form>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
