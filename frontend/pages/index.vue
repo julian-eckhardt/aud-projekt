@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <graph-component></graph-component>
+    <GraphComponent />
   </div>
 </template>
 

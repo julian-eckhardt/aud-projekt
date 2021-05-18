@@ -1,7 +1,5 @@
 <template>
-  <client-only>
-    <div id="d3-graph"></div>
-  </client-only>
+  <div id="d3-graph"></div>
 </template>
 
 <script>
@@ -16,14 +14,6 @@ export default {
       const width = 500
       const height = 500
       const margin = { top: 40, right: 40, bottom: 40, left: 40 }
-
-      const svg = d3
-        .select('#d3-graph')
-        .append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .append('g')
-        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
 
       const jsonData = [
         {
@@ -141,35 +131,48 @@ export default {
         .domain([
           0,
           d3.max(jsonData, function (d) {
-            return d.total
+            return d.Gesamt
           }),
         ])
         .range([height - margin.top - margin.bottom, 0])
 
-      const xAxis = d3.axisBottom().tickFormat(d3.timeFormat('%a %d'))
+      const xAxis = d3
+        .axisBottom(x)
+        .tickFormat(d3.timeFormat('%-m/%-d/%Y'))
+        .tickPadding(8)
 
-      const yAxis = d3.axisLeft().tickPadding(8)
+      const yAxis = d3.axisLeft(y).tickPadding(8)
 
-      svg
+      const svg = d3
         .selectAll('#d3-graph')
         .data(jsonData)
-        .enter()
-        .append('rect')
-        .attr('class', 'bar')
+        .append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + margin.left + ', ' + margin.top + ')')
+
+      const line = d3
+        .line()
+        .x((d) => x(d.index))
+        .y((d) => y(d.Gesamt))
+
+      svg
+        .select('#d3-graph')
         .attr('x', function (d) {
-          return x(new Date(d.date))
+          return x(new Date(d.index))
         })
         .attr('y', function (d) {
           return (
             height -
             margin.top -
             margin.bottom -
-            (height - margin.top - margin.bottom - y(d.total))
+            (height - margin.top - margin.bottom - y(d.Gesamt))
           )
         })
         .attr('width', 10)
         .attr('height', function (d) {
-          return height - margin.top - margin.bottom - y(d.total)
+          return height - margin.top - margin.bottom - y(d.Gesamt)
         })
 
       svg
@@ -182,6 +185,19 @@ export default {
         .call(xAxis)
 
       svg.append('g').attr('class', 'y axis').call(yAxis)
+
+      svg
+        .selectAll('#d3-graph')
+        .data(jsonData)
+        .enter()
+        .append('path')
+        .attr('d', function (d) {
+          return line(d.Gesamt)
+        })
+        .attr('stroke', 'steelblue')
+        .attr('stroke-width', 1.5)
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
     },
   },
 }
