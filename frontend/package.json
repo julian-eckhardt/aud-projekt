@@ -25,8 +25,9 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.9.1",
-    "d3": "^6.7.0",
-    "nuxt": "^2.15.3"
+    "fusioncharts": "^3.17.0",
+    "nuxt": "^2.15.3",
+    "vue-fusioncharts": "^3.1.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",
