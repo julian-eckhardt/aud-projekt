@@ -59,6 +59,13 @@ export default {
   components: {
     GraphComponent,
   },
+  data() {
+    return {
+      rReductionValue: null,
+      timeFrameStart: null,
+      timeFrameEnd: null,
+    }
+  },
 }
 </script>
 
