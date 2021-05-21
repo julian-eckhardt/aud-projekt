@@ -50,52 +50,42 @@ export default {
         {
           name: 'index',
           type: 'date',
-          format: '%Y-%d-%m',
+          format: '%Y-%m-%d',
         },
         {
           name: 'Gesamt',
           type: 'number',
         },
+        /*
         {
           name: 'Reduzierte_Gesamt',
           type: 'number',
         },
+        */
       ],
-      jsonData: [
-        {
-          index: '2020-05-06',
-          Gesamt: 5980,
-          Reduzierte_Gesamt: 5120,
-          foo: 'bar',
-        },
-        {
-          index: '2020-05-07',
-          Gesamt: 5705,
-          Reduzierte_Gesamt: 5090,
-        },
-        {
-          index: '2020-05-08',
-          Gesamt: 5394,
-          Reduzierte_Gesamt: 5001,
-        },
-        {
-          index: '2020-05-09',
-          Gesamt: 5703,
-          Reduzierte_Gesamt: 4120,
-        },
-        {
-          index: '2020-05-10',
-          Gesamt: 5715,
-          Reduzierte_Gesamt: 3120,
-        },
-      ],
+      jsonData: [],
     }
   },
-  mounted() {
+  computed: {
+    formattedData() {
+      return this.jsonData.map((entry) => {
+        return {
+          ...entry,
+          index: entry.index.substring(0, 10),
+        }
+      })
+    },
+  },
+  async mounted() {
+    try {
+      this.jsonData = await this.$axios.$get('http://localhost:5000/test')
+    } catch (err) {
+      // NOOP
+    }
     const FusionCharts = require('fusioncharts')
 
     const fusionTable = new FusionCharts.DataStore().createDataTable(
-      this.jsonData,
+      this.formattedData,
       this.schema
     )
     this.dataSource.data = fusionTable
