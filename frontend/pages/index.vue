@@ -1,62 +1,66 @@
 <template>
-  <b-container fluid class="mt-5">
-    <b-row>
-      <b-col class="graphCol" cols="10">
-        <client-only>
-          <GraphComponent />
-        </client-only>
-      </b-col>
-      <b-col class="formCol" cols="2">
-        <b-card class="bg-light">
-          <h3>Parametereingabe</h3>
-          <b-form class="forms mt-4">
-            <b-form-group
-              id="rReductionValue"
-              label="R-Zahl-Reduktion:"
-              label-for="rReductionInput"
-            >
-              <b-form-input
-                id="rInput"
-                v-model="rReductionValue"
-                class="rReductionInput"
-                placeholder="Z.B. 1.2"
-                required
-                type="text"
-              />
-            </b-form-group>
+  <div>
+    <div class="title">A + D - Projekt Gruppe - 2</div>
 
-            <b-form-group
-              id="timeFrameStart"
-              label="Startzeitpunkt:"
-              label-for="timeFrameStartInput"
-            >
-              <b-form-input
-                id="timeFrameStartInput"
-                v-model="timeFrameStart"
-                placeholder="Datum eingeben"
-                type="date"
-              />
-            </b-form-group>
-            <b-form-group
-              id="timeFrameEnd"
-              label="Endzeitpunkt:"
-              label-for="timeFrameEndInput"
-            >
-              <b-form-input
-                id="timeFrameEndInput"
-                v-model="timeFrameEnd"
-                placeholder="Datum eingeben"
-                type="date"
-              />
-            </b-form-group>
-            <b-button variant="primary" class="float-right"
-              >Aktualisieren</b-button
-            >
-          </b-form>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+    <b-container fluid class="mt-5">
+      <b-row>
+        <b-col class="graphCol" cols="10">
+          <client-only>
+            <GraphComponent />
+          </client-only>
+        </b-col>
+        <b-col class="formCol" cols="2">
+          <b-card class="bg-light">
+            <h3>Parametereingabe</h3>
+            <b-form class="forms mt-4">
+              <b-form-group
+                id="rReductionValue"
+                label="R-Zahl-Reduktion:"
+                label-for="rReductionInput"
+              >
+                <b-form-input
+                  id="rInput"
+                  v-model="rReductionValue"
+                  class="rReductionInput"
+                  placeholder="Z.B. 1.2"
+                  required
+                  type="text"
+                />
+              </b-form-group>
+
+              <b-form-group
+                id="timeFrameStart"
+                label="Startzeitpunkt:"
+                label-for="timeFrameStartInput"
+              >
+                <b-form-input
+                  id="timeFrameStartInput"
+                  v-model="timeFrameStart"
+                  placeholder="Datum eingeben"
+                  type="date"
+                />
+              </b-form-group>
+              <b-form-group
+                id="timeFrameEnd"
+                label="Endzeitpunkt:"
+                label-for="timeFrameEndInput"
+              >
+                <b-form-input
+                  id="timeFrameEndInput"
+                  v-model="timeFrameEnd"
+                  placeholder="Datum eingeben"
+                  type="date"
+                />
+              </b-form-group>
+              <b-button variant="primary" class="float-right"
+                >Aktualisieren</b-button
+              >
+            </b-form>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -82,8 +86,10 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 50px;
+  padding-top: 2%;
   color: #35495e;
+  text-align: center;
   letter-spacing: 1px;
 }
 
