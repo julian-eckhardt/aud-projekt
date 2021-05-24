@@ -1,16 +1,15 @@
 <template>
   <div>
-    <b-container class="headerCont" fluid>
-      <div id="nav">
-        <b-navbar class="navBar fixed-top" type="light">
-          <b-navbar-nav>
-            <b-nav-item nuxt-link to="/"> Hauptseite </b-nav-item>
-            <b-nav-item nuxt-link to="/about"> Über </b-nav-item>
-            <b-nav-item nuxt-link to="/help"> Hilfe </b-nav-item>
-          </b-navbar-nav>
-        </b-navbar>
-      </div>
-    </b-container>
+    <b-navbar class="fixed-top" type="light">
+      <b-container fluid>
+        <b-navbar-brand>
+          <strong>A&amp;D-Projekt</strong> Gruppe 2
+        </b-navbar-brand>
+        <b-navbar-nav ml-auto>
+          <b-nav-item nuxt-link to="/"> Hauptseite </b-nav-item>
+        </b-navbar-nav>
+      </b-container>
+    </b-navbar>
   </div>
 </template>
 
@@ -21,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-.navBar {
+.navbar {
   background: #8fd19e;
 }
 
@@ -33,7 +32,7 @@ export default {
   color: #21392e;
 }
 
-.headerCont {
-  margin-bottom: 5vh;
+.navbar-brand {
+  font-size: 1em;
 }
 </style>

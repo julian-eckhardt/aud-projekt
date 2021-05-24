@@ -1,61 +1,63 @@
 <template>
   <div>
-    <div class="title">A + D - Projekt Gruppe - 2</div>
-
-    <b-container fluid class="mt-5">
+    <b-container fluid>
       <b-row>
-        <b-col class="graphCol" cols="10">
+        <!-- GRAPH COL -->
+        <b-col cols="9">
           <client-only>
             <GraphComponent />
           </client-only>
         </b-col>
-        <b-col class="formCol" cols="2">
-          <b-card class="bg-light">
-            <h3>Parametereingabe</h3>
-            <b-form class="forms mt-4">
-              <b-form-group
-                id="rReductionValue"
-                label="R-Zahl-Reduktion:"
-                label-for="rReductionInput"
-              >
-                <b-form-input
-                  id="rInput"
-                  v-model="rReductionValue"
-                  class="rReductionInput"
-                  placeholder="Z.B. 1.2"
-                  required
-                  type="text"
-                />
-              </b-form-group>
 
-              <b-form-group
-                id="timeFrameStart"
-                label="Startzeitpunkt:"
-                label-for="timeFrameStartInput"
-              >
-                <b-form-input
-                  id="timeFrameStartInput"
-                  v-model="timeFrameStart"
-                  placeholder="Datum eingeben"
-                  type="date"
-                />
-              </b-form-group>
-              <b-form-group
-                id="timeFrameEnd"
-                label="Endzeitpunkt:"
-                label-for="timeFrameEndInput"
-              >
-                <b-form-input
-                  id="timeFrameEndInput"
-                  v-model="timeFrameEnd"
-                  placeholder="Datum eingeben"
-                  type="date"
-                />
-              </b-form-group>
-              <b-button variant="primary" class="float-right"
-                >Aktualisieren</b-button
-              >
-            </b-form>
+        <!-- PARAMETER FORM COL -->
+        <b-col class="formCol" cols="3">
+          <b-card header="Parametereingabe">
+            <b-card-text>
+              <b-form class="forms">
+                <b-form-group
+                  id="rReductionValue"
+                  label="R-Zahl-Reduktion:"
+                  label-for="rReductionInput"
+                >
+                  <b-form-input
+                    id="rInput"
+                    v-model="rReductionValue"
+                    class="rReductionInput"
+                    placeholder="z.B. 1.2"
+                    required
+                    type="text"
+                  />
+                </b-form-group>
+
+                <b-form-group
+                  id="timeFrameStart"
+                  label="Startzeitpunkt:"
+                  label-for="timeFrameStartInput"
+                >
+                  <b-form-input
+                    id="timeFrameStartInput"
+                    v-model="timeFrameStart"
+                    placeholder="Datum eingeben"
+                    type="date"
+                  />
+                </b-form-group>
+                <b-form-group
+                  id="timeFrameEnd"
+                  label="Endzeitpunkt:"
+                  label-for="timeFrameEndInput"
+                >
+                  <b-form-input
+                    id="timeFrameEndInput"
+                    v-model="timeFrameEnd"
+                    placeholder="Datum eingeben"
+                    type="date"
+                  />
+                </b-form-group>
+                <b-button variant="primary" class="float-right"
+                  >Aktualisieren</b-button
+                >
+              </b-form>
+            </b-card-text>
           </b-card>
         </b-col>
       </b-row>
@@ -80,28 +82,4 @@ export default {
 }
 </script>
 
-<style>
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 50px;
-  padding-top: 2%;
-  color: #35495e;
-  text-align: center;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
+<style></style>

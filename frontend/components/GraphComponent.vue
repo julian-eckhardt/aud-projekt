@@ -95,6 +95,6 @@ export default {
 
 <style scoped>
 #chart-container {
-  height: 80vh;
+  height: 70vh;
 }
 </style>
