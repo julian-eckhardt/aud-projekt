@@ -53,7 +53,10 @@
                     type="date"
                   />
                 </b-form-group>
-                <b-button variant="primary" class="float-right"
+                <b-button
+                  variant="primary"
+                  class="float-right"
+                  @click="updateData()"
                   >Aktualisieren</b-button
                 >
               </b-form>
@@ -78,6 +81,25 @@ export default {
       timeFrameEnd: null,
       rReductionValue: null,
     }
+  },
+  methods: {
+    async updateData() {
+      const params = {
+        timeFrameStart: this.timeFrameStart,
+        timeFrameEnd: this.timeFrameEnd,
+        rReductionValue: this.rReductionValue,
+      }
+      try {
+        const response = await this.$axios.post('/update', params)
+        this.jsonData = response.data.map((JSON) => {
+          return {
+            ...JSON,
+          }
+        })
+      } catch (e) {
+        alert(e.toString())
+      }
+    },
   },
 }
 </script>
