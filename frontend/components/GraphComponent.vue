@@ -13,7 +13,12 @@
 
 <script>
 export default {
-  props: ['updatedData'],
+  props: {
+    updatedData: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       type: 'timeseries',
@@ -57,48 +62,39 @@ export default {
           name: 'Gesamt',
           type: 'number',
         },
-        /*
         {
           name: 'Reduzierte_Gesamt',
           type: 'number',
         },
-        */
       ],
-      jsonData: [],
     }
   },
   computed: {
     formattedData() {
-      if (this.updatedData.length === 0) {
-        return this.jsonData.map((entry) => {
-          return {
-            ...entry,
-            index: entry.index.substring(0, 10),
-          }
-        })
-      } else {
-        return this.updatedData.map((entry) => {
-          return {
-            ...entry,
-            index: entry.index.substring(0, 10),
-          }
-        })
-      }
+      return this.updatedData.map((entry) => {
+        return {
+          ...entry,
+          index: entry.index.substring(0, 10),
+        }
+      })
     },
   },
-  async mounted() {
-    try {
-      this.jsonData = await this.$axios.$get('/test')
-    } catch (err) {
-      // NOOP
-    }
-    const FusionCharts = require('fusioncharts')
-
-    const fusionTable = new FusionCharts.DataStore().createDataTable(
-      this.formattedData,
-      this.schema
-    )
-    this.dataSource.data = fusionTable
+  watch: {
+    formattedData(newData) {
+      this.paintGraph()
+    },
+  },
+  mounted() {
+    this.paintGraph()
+  },
+  methods: {
+    paintGraph() {
+      const FusionCharts = require('fusioncharts')
+      this.dataSource.data = new FusionCharts.DataStore().createDataTable(
+        this.formattedData,
+        this.schema
+      )
+    },
   },
 }
 </script>

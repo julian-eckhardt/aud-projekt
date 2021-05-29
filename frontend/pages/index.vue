@@ -83,6 +83,9 @@ export default {
       updatedData: [],
     }
   },
+  async mounted() {
+    await this.updateData()
+  },
   methods: {
     async updateData() {
       const params = {
@@ -91,12 +94,17 @@ export default {
         rReductionValue: this.rReductionValue,
       }
       try {
-        const response = await this.$axios.post('/update', params)
-        this.updatedData = response.data.map((JSON) => {
-          return {
-            ...JSON,
-          }
-        })
+        const queryString = Object.keys(params)
+          .filter((key) => params[key] != null)
+          .map((key) => {
+            return `${encodeURIComponent(key)}=${encodeURIComponent(
+              params[key]
+            )}`
+          })
+          .join('&')
+        this.updatedData = await this.$axios
+          .get(`/data?${queryString}`)
+          .then((response) => response.data)
       } catch (e) {
         alert(e.toString())
       }
