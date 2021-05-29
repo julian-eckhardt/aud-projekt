@@ -13,6 +13,7 @@
 
 <script>
 export default {
+  props: ['updatedData'],
   data() {
     return {
       type: 'timeseries',
@@ -68,17 +69,26 @@ export default {
   },
   computed: {
     formattedData() {
-      return this.jsonData.map((entry) => {
-        return {
-          ...entry,
-          index: entry.index.substring(0, 10),
-        }
-      })
+      if (this.updatedData.length === 0) {
+        return this.jsonData.map((entry) => {
+          return {
+            ...entry,
+            index: entry.index.substring(0, 10),
+          }
+        })
+      } else {
+        return this.updatedData.map((entry) => {
+          return {
+            ...entry,
+            index: entry.index.substring(0, 10),
+          }
+        })
+      }
     },
   },
   async mounted() {
     try {
-      this.jsonData = await this.$axios.$get('http://localhost:5000/test')
+      this.jsonData = await this.$axios.$get('/test')
     } catch (err) {
       // NOOP
     }

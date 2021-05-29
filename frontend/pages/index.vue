@@ -5,7 +5,7 @@
         <!-- GRAPH COL -->
         <b-col cols="9">
           <client-only>
-            <GraphComponent />
+            <GraphComponent :updated-data="updatedData" />
           </client-only>
         </b-col>
 
@@ -80,6 +80,7 @@ export default {
       timeFrameStart: null,
       timeFrameEnd: null,
       rReductionValue: null,
+      updatedData: [],
     }
   },
   methods: {
@@ -91,7 +92,7 @@ export default {
       }
       try {
         const response = await this.$axios.post('/update', params)
-        this.jsonData = response.data.map((JSON) => {
+        this.updatedData = response.data.map((JSON) => {
           return {
             ...JSON,
           }
