@@ -23,7 +23,7 @@
                     id="rInput"
                     v-model="rReductionValue"
                     class="rReductionInput"
-                    placeholder="z.B. 1.2"
+                    placeholder="z.B. 0.8"
                     required
                     type="text"
                   />

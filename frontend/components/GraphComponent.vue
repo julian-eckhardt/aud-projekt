@@ -30,7 +30,7 @@ export default {
         chart: {
           caption: 'Covid Fallzahlen',
           subcaption: 'Gesamtfallzahlen',
-          series: 'index',
+          series: 'Typ',
           xaxisname: 'Datum',
           yaxisname: 'Fallzahlen in 1000',
           numbersuffix: 'K',
@@ -44,7 +44,7 @@ export default {
                 },
                 {
                   value: 'Reduzierte_Gesamt',
-                  type: 'column',
+                  type: 'line',
                 },
               ],
             },
