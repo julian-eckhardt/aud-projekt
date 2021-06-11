@@ -27,10 +27,10 @@ export default {
       height: '100%',
       dataFormat: 'json',
       dataSource: {
+        series: 'Type',
         chart: {
           caption: 'Covid Fallzahlen',
           subcaption: 'Gesamtfallzahlen',
-          series: 'Typ',
           xaxisname: 'Datum',
           yaxisname: 'Fallzahlen in 1000',
           numbersuffix: 'K',
@@ -39,12 +39,8 @@ export default {
             {
               plot: [
                 {
-                  value: 'Gesamt',
-                  type: 'line',
-                },
-                {
-                  value: 'Reduzierte_Gesamt',
-                  type: 'line',
+                  value: 'Fallzahlen',
+                  title: 'Fallzahlen',
                 },
               ],
             },
@@ -59,12 +55,12 @@ export default {
           format: '%Y-%m-%d',
         },
         {
-          name: 'Gesamt',
+          name: 'Fallzahlen',
           type: 'number',
         },
         {
-          name: 'Reduzierte_Gesamt',
-          type: 'number',
+          name: 'Type',
+          type: 'string',
         },
       ],
     }
