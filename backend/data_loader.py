@@ -44,7 +44,10 @@ def data_from_params(start_date, end_date, r_reduction_value):
             if index == 0:
                 df_result.at[index, "Fallzahlen"] = df_result.at[index, "Fallzahlen Original"]
             else:
+                # Abfrage: Sind wir im Zeitraum, wenn ja:
                 rate_of_change_new = df_result.at[index -1, "Änderungsrate"] * (1 - float(r_reduction_value))
+                # else:
+                #    rate_of_change_new = df_result.at[index -1, "Änderungsrate"]
                 print(f"Änderung alt: {df_result.at[index - 1, 'Änderungsrate']} neu: {rate_of_change_new}")
                 df_result.at[index, "Fallzahlen"] = round(
                     df_result.at[index - 1, "Fallzahlen"] * rate_of_change_new
