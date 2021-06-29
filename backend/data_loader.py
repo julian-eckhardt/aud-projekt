@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def load_data():
-    df = pd.read_excel('backend/data/Fallzahlen_Kum_Tab.xlsx',
+    df = pd.read_excel('data/Fallzahlen_Kum_Tab.xlsx',
                        sheet_name='BL_7-Tage-Fallzahlen', skiprows=2, index_col=0)
     df = df.T
     df.index = pd.to_datetime(df.index)
@@ -20,6 +20,11 @@ def load_data():
 
 
 def data_from_params(start_date, end_date, r_reduction_value):
+
+    date_format = "%Y-%m-%d"
+    start_date_timestamp = datetime.strptime(start_date, date_format)
+    end_date_timestamp = datetime.strptime(end_date, date_format)
+
     df = load_data()
 
     # Kopieren von Daten
@@ -44,11 +49,14 @@ def data_from_params(start_date, end_date, r_reduction_value):
             if index == 0:
                 df_result.at[index, "Fallzahlen"] = df_result.at[index, "Fallzahlen Original"]
             else:
+                timestamp = row["index"]
                 # Abfrage: Sind wir im Zeitraum, wenn ja:
-                rate_of_change_new = df_result.at[index -1, "Änderungsrate"] * (1 - float(r_reduction_value))
-                # else:
-                #    rate_of_change_new = df_result.at[index -1, "Änderungsrate"]
-                print(f"Änderung alt: {df_result.at[index - 1, 'Änderungsrate']} neu: {rate_of_change_new}")
+                if start_date_timestamp <= timestamp and end_date_timestamp >= timestamp:
+                    rate_of_change_new = df_result.at[index -1, "Änderungsrate"] * (1 - float(r_reduction_value))
+                else:
+                    rate_of_change_new = df_result.at[index -1, "Änderungsrate"]
+                #print(f"Änderung alt: {df_result.at[index - 1, 'Änderungsrate']} neu: {rate_of_change_new}")
+                print(df_result.iloc[index])
                 df_result.at[index, "Fallzahlen"] = round(
                     df_result.at[index - 1, "Fallzahlen"] * rate_of_change_new
                 )
