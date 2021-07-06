@@ -26,17 +26,20 @@
                 </b-form-group>
                 <b-form-group
                   id="rReductionValue"
-                  label="R-Zahl-Reduktion:"
+                  label="Reduktion:"
                   label-for="rReductionInput"
                 >
                   <b-form-input
                     id="rInput"
                     v-model="rReductionValue"
+                    type="range"
+                    min="0"
+                    max="250"
                     class="rReductionInput"
                     placeholder="z.B. 0.8"
                     required
-                    type="text"
                   />
+                  <b-form-info> {{ rReductionPercent }}% </b-form-info>
                 </b-form-group>
 
                 <b-form-group
@@ -94,7 +97,7 @@ export default {
       bundesland: bundesländer[0],
       timeFrameStart: null,
       timeFrameEnd: null,
-      rReductionValue: null,
+      rReductionValue: 0,
       updatedData: [],
     }
   },
@@ -107,6 +110,12 @@ export default {
         }
       })
     },
+    rReductionDecimal() {
+      return this.rReductionValue / 1000
+    },
+    rReductionPercent() {
+      return this.rReductionValue / 10
+    },
   },
   async mounted() {
     await this.updateData()
@@ -117,7 +126,7 @@ export default {
         bundesland: this.bundesland !== 'Gesamt' ? this.bundesland : null,
         timeFrameStart: this.timeFrameStart,
         timeFrameEnd: this.timeFrameEnd,
-        rReductionValue: this.rReductionValue,
+        rReductionValue: this.rReductionDecimal ? this.rReductionDecimal : null,
       }
       try {
         const queryString = Object.keys(params)
