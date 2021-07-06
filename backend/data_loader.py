@@ -3,13 +3,21 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
+covid_data = pd.read_excel('data/Fallzahlen_Kum_Tab.xlsx', sheet_name='BL_7-Tage-Fallzahlen', skiprows=2, index_col=0)
 
-def load_data():
-    df = pd.read_excel('data/Fallzahlen_Kum_Tab.xlsx',
-                       sheet_name='BL_7-Tage-Fallzahlen', skiprows=2, index_col=0)
+def load_bundesländer():
+    df = covid_data.copy()
+    return df.index.tolist()
+
+def load_data(bundesland):
+    df = covid_data.copy()
     df = df.T
     df.index = pd.to_datetime(df.index)
     df.reset_index(inplace=True)
+
+    if bundesland is not None:
+        df["Gesamt"] = df[bundesland]
+
     df.drop(columns=["Baden-Württemberg", "Bayern", "Berlin",
                             "Brandenburg", "Bremen", "Hamburg", "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen",
                             "Nordrhein-Westfalen", "Rheinland-Pfalz", "Saarland", "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein",
@@ -19,13 +27,13 @@ def load_data():
     return df
 
 
-def data_from_params(start_date, end_date, r_reduction_value):
+def data_from_params(start_date, end_date, r_reduction_value, bundesland):
 
     date_format = "%Y-%m-%d"
     start_date_timestamp = datetime.strptime(start_date, date_format)
     end_date_timestamp = datetime.strptime(end_date, date_format)
 
-    df = load_data()
+    df = load_data(bundesland)
 
     # Kopieren von Daten
     df_result = df.copy()

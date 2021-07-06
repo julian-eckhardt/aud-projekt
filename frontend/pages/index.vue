@@ -13,7 +13,17 @@
         <b-col class="formCol" cols="3">
           <b-card header="Parametereingabe">
             <b-card-text>
-              <b-form class="forms">
+              <b-form class="forms" @submit.prevent="updateData()">
+                <b-form-group
+                  id="bundesland"
+                  label="Bundesland:"
+                  label-for="bundesland-input"
+                >
+                  <b-form-select
+                    v-model="bundesland"
+                    :options="bundesländerOptions"
+                  ></b-form-select>
+                </b-form-group>
                 <b-form-group
                   id="rReductionValue"
                   label="R-Zahl-Reduktion:"
@@ -75,13 +85,28 @@ export default {
   components: {
     GraphComponent,
   },
-  data() {
+  async asyncData({ $axios }) {
+    let bundesländer = await $axios.$get(`/bundeslaender`)
+    bundesländer = bundesländer.filter((land) => land !== 'Gesamt')
+    bundesländer.unshift('Gesamt')
     return {
+      bundesländer,
+      bundesland: bundesländer[0],
       timeFrameStart: null,
       timeFrameEnd: null,
       rReductionValue: null,
       updatedData: [],
     }
+  },
+  computed: {
+    bundesländerOptions() {
+      return this.bundesländer.map((land) => {
+        return {
+          value: land,
+          text: land,
+        }
+      })
+    },
   },
   async mounted() {
     await this.updateData()
@@ -89,6 +114,7 @@ export default {
   methods: {
     async updateData() {
       const params = {
+        bundesland: this.bundesland !== 'Gesamt' ? this.bundesland : null,
         timeFrameStart: this.timeFrameStart,
         timeFrameEnd: this.timeFrameEnd,
         rReductionValue: this.rReductionValue,
