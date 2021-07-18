@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    updatedData: {
+    graphData: {
       type: Array,
       required: true,
     },
@@ -66,8 +66,11 @@ export default {
     }
   },
   computed: {
+    /**
+     * cut timestamps from ISO format into YYYY-MM-DD
+     */
     formattedData() {
-      return this.updatedData.map((entry) => {
+      return this.graphData.map((entry) => {
         return {
           ...entry,
           index: entry.index.substring(0, 10),
@@ -76,14 +79,21 @@ export default {
     },
   },
   watch: {
+    /**
+     * trigger fusion charts refresh when formattedData is updated
+     */
     formattedData(newData) {
       this.paintGraph()
     },
   },
   mounted() {
+    // paint graph when component is mounted
     this.paintGraph()
   },
   methods: {
+    /**
+     * paint the graph
+     */
     paintGraph() {
       const FusionCharts = require('fusioncharts')
       this.dataSource.data = new FusionCharts.DataStore().createDataTable(

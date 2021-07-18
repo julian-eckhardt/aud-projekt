@@ -5,7 +5,7 @@
         <!-- GRAPH COL -->
         <b-col cols="9">
           <client-only>
-            <GraphComponent :updated-data="updatedData" />
+            <GraphComponent :graph-data="graphData" />
           </client-only>
         </b-col>
 
@@ -15,13 +15,13 @@
             <b-card-text>
               <b-form class="forms" @submit.prevent="updateData()">
                 <b-form-group
-                  id="bundesland"
+                  id="state"
                   label="Bundesland:"
-                  label-for="bundesland-input"
+                  label-for="state-input"
                 >
                   <b-form-select
-                    v-model="bundesland"
-                    :options="bundesländerOptions"
+                    v-model="state"
+                    :options="statesOptions"
                   ></b-form-select>
                 </b-form-group>
                 <b-form-group
@@ -89,30 +89,44 @@ export default {
     GraphComponent,
   },
   async asyncData({ $axios }) {
-    let bundesländer = await $axios.$get(`/bundeslaender`)
-    bundesländer = bundesländer.filter((land) => land !== 'Gesamt')
-    bundesländer.unshift('Gesamt')
+    // get states from server
+    let states = await $axios.$get(`/bundeslaender`)
+
+    // move "Gesamt" to states list head
+    states = states.filter((land) => land !== 'Gesamt')
+    states.unshift('Gesamt')
+
+    // what is returned here gets moved into data
     return {
-      bundesländer,
-      bundesland: bundesländer[0],
+      states,
+      state: states[0],
       timeFrameStart: null,
       timeFrameEnd: null,
       rReductionValue: 0,
-      updatedData: [],
+      graphData: [],
     }
   },
   computed: {
-    bundesländerOptions() {
-      return this.bundesländer.map((land) => {
+    /**
+     * Provide states, as needed by the selection dropdown
+     */
+    statesOptions() {
+      return this.states.map((land) => {
         return {
           value: land,
           text: land,
         }
       })
     },
+    /**
+     * Reduction value, converted to decimal
+     */
     rReductionDecimal() {
       return this.rReductionValue / 1000
     },
+    /**
+     * Reduction value, converted to percent
+     */
     rReductionPercent() {
       return this.rReductionValue / 10
     },
@@ -121,14 +135,18 @@ export default {
     await this.updateData()
   },
   methods: {
+    /**
+     * Updates the graph
+     */
     async updateData() {
       const params = {
-        bundesland: this.bundesland !== 'Gesamt' ? this.bundesland : null,
+        bundesland: this.state !== 'Gesamt' ? this.state : null,
         timeFrameStart: this.timeFrameStart,
         timeFrameEnd: this.timeFrameEnd,
         rReductionValue: this.rReductionDecimal ? this.rReductionDecimal : null,
       }
       try {
+        // build query string: drop
         const queryString = Object.keys(params)
           .filter((key) => params[key] != null)
           .map((key) => {
@@ -137,7 +155,7 @@ export default {
             )}`
           })
           .join('&')
-        this.updatedData = await this.$axios
+        this.graphData = await this.$axios
           .get(`/data?${queryString}`)
           .then((response) => response.data)
       } catch (e) {
@@ -147,5 +165,3 @@ export default {
   },
 }
 </script>
-
-<style></style>
