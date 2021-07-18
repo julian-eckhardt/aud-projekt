@@ -30,7 +30,7 @@ Wechseln Sie in das Verzeichnis `backend/` und installieren Sie die folgenden Li
 
 2.  Flask-CORS (mit dem Befehl `pip install -U flask-cors`)
 
-### Im Frontend-Ordner, nach der Installation von Node.JS, müssen die Nodemodule installiert werden:
+### Frontend-Bibliotheken
 
 Navigieren Sie nun in den Ordner `frontend/`. Die benötigten Libraries sind bereits in der Datei `package.json` gespeichert und können automatisiert installiert werden:
 
